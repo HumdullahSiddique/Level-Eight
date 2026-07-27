@@ -37,6 +37,7 @@ function updateNav() {
 window.addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 
-// ---------- PROJECT SHOWCASE: plain video, real sound, user-initiated play ----------
+// ---------- "SEE THE DIFFERENCE" VIDEO: plain video, real sound, user-initiated play ----------
 // No autoplay, no muting, no scroll trickery — browsers block unmuted
 // autoplay anyway. Native controls handle play/pause/volume/seek reliably.
+// The "See Us In Action" reel videos are separate, silent, looping background clips.
