@@ -71,15 +71,20 @@ if (reelViewport && reelTrack && reelDots) {
   }
   const dotEls = Array.from(reelDots.children);
 
-  function pageOffset(page) {
-    const cardWidth = reelItems[0].getBoundingClientRect().width;
-    const gap = 28;
-    return (cardWidth + gap) * PER_PAGE * page;
+  // Clamp the start index so the LAST page always shows a full 3 cards
+  // too — with 7 items that means page 3 slightly overlaps page 2's last
+  // couple of cards instead of sliding past the end into empty space.
+  function startIndexForPage(page) {
+    const maxStart = reelItems.length - PER_PAGE;
+    return Math.min(page * PER_PAGE, maxStart);
   }
 
   function goToPage(page) {
     currentPage = (page + pageCount) % pageCount;
-    reelTrack.style.transform = `translateX(-${pageOffset(currentPage)}px)`;
+    const cardWidth = reelItems[0].getBoundingClientRect().width;
+    const gap = 28;
+    const startIndex = startIndexForPage(currentPage);
+    reelTrack.style.transform = `translateX(-${startIndex * (cardWidth + gap)}px)`;
     dotEls.forEach((d, i) => d.classList.toggle('active', i === currentPage));
   }
 
